@@ -29,6 +29,10 @@ export default {
     this.socket.on("connect_error", (error) => {
       console.error("[connect error]: ", error);
     });
+    this.socket.on("verify-connection", (data) => {
+      console.log("[verify-connection]: ", data);
+      this.response = data;
+    });
   },
   methods: {
     testConnection() {
