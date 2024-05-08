@@ -25,6 +25,7 @@ const io = new Server(httpServer, {
   },
 });
 
+/*
 // Wait for connections from clients
 io.on("connection", (socket) => {
   console.log("user : " + socket.id + " connected");
@@ -35,10 +36,25 @@ io.on("connection", (socket) => {
   });
 
   // Send data to all connected clients in realtime
-  socket.on("sent-message", (message) => {
-    io.emit("new-message", message);
+  socket.on("sent-message", (message, room) => {
+    if (room === "") {
+      socket.broadcast.emit("new-message", message);
+      console.log("message : " + message);
+    } else {
+      socket.broadcast.to(room).emit("new-message", message);
+      console.log("message : " + message + " in room : " + room);
+    }
+  });
+
+  // Join a room
+  socket.on("join-room", (room) => {
+    socket.join(room);
+    console.log("user : " + socket.id + " joined room : " + room);
   });
 });
+*/
+
+// For quiz session
 
 httpServer.listen(port, () => {
   console.log("running in port http://localhost:" + port);

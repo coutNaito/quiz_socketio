@@ -4,6 +4,9 @@
       <div v-for="(message, index) in messages" :key="index">{{ message }}</div>
       <input type="text" v-model="newMessage" @keyup.enter="sendMessage" placeholder="Type your message...">
       <button @click="sendMessage">Send</button>
+      <input type="text" v-model="roomName" placeholder="Enter room name...">
+      <button @click="joinRoom">Join Room</button>
+      <button @click="">To chat</button>
     </div>
   </template>
   
@@ -32,10 +35,14 @@
       sendMessage() {
         if (this.newMessage.trim() !== '') {
           // Send the message to the server
-          this.socket.emit('sent-message', this.newMessage);
+          this.socket.emit('sent-message', this.newMessage, this.roomName);
           // Clear the input field after sending the message
           this.newMessage = '';
         }
+      },
+      joinRoom() {
+        // Join a room
+        this.socket.emit('join-room', this.roomName);
       },
     },
     beforeUnmount() {
