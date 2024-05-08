@@ -8,28 +8,31 @@
 
 <script>
 import io from 'socket.io-client';
-// เชื่อมต่อกับ socket
-let socket = io("http://localhost:3000", {
-        transports: ["websocket", "polling"],
-      });
 
 export default {
   data() {
     return {
       response: null,
+      socket: null, // Initialize socket property
     };
+  },
+  created() {
+    // Initialize socket inside the created hook
+    this.socket = io("http://localhost:3000", {
+      transports: ["websocket", "polling"],
+    });
+
+    // Handle socket events here
+    this.socket.on("disconnect", (reason) => {
+      console.log("[socket disconnected]: ", reason);
+    });
+    this.socket.on("connect_error", (error) => {
+      console.error("[connect error]: ", error);
+    });
   },
   methods: {
     testConnection() {
-      
-      // กรณีการเชื่อมต่อถูกตัดขาด
-      socket.on("disconnect", (reason) => {
-        console.log("[socket disconnected]: ", reason);
-      });
-      // กรณีการเชื่อมต่อเกิดความผิดพลาด
-      socket.on("connect_error", (error) => {
-        console.error("[connect error]: ", error);
-      });
+      // You can access this.socket here
     },
   },
 };

@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const http = require("http");
 const { Server } = require("socket.io");
+const cors = require("cors");
 
 const server = express();
 const port = 3000;
@@ -15,7 +16,14 @@ server.use(
 
 const httpServer = http.createServer(server);
 
-const io = new Server(httpServer);
+server.use(cors());
+
+const io = new Server(httpServer, {
+  cors: {
+    origin: "*", // Allow requests from any origin, you can specify your frontend URL here
+    methods: ["GET", "POST"], // Allow only GET and POST requests
+  },
+});
 
 // Wait for connections from clients
 io.on("connection", (socket) => {
@@ -23,7 +31,7 @@ io.on("connection", (socket) => {
 
   // When a client disconnects
   socket.on("disconnect", () => {
-    console.log("user disconnected");
+    console.log("user : " + socket.id + " disconnected");
   });
 
   // Send data to all connected clients in realtime
