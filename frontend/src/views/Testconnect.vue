@@ -12,13 +12,13 @@ import io from 'socket.io-client';
 export default {
   data() {
     return {
-      response: null,
-      socket: null, // Initialize socket property
+      user_id: "12345600",
+      room_id: "9874",
     };
   },
   created() {
     // Initialize socket inside the created hook
-    this.socket = io("http://localhost:3000", {
+    this.socket = io("http://localhost:4000", {
       transports: ["websocket", "polling"],
     });
 
@@ -37,8 +37,9 @@ export default {
   methods: {
     testConnection() {
       // You can access this.socket here
-    },
+      this.socket.emit("create_room", "1234", "9874");
   },
+  }
 };
 </script>
 

@@ -22,7 +22,7 @@
     },
     created() {
       // Replace 'http://localhost:3000' with your server URL
-      this.socket = io("http://localhost:3000", {
+      this.socket = io("http://localhost:4000", {
         transports: ["websocket", "polling"],
       });
   
