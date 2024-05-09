@@ -5,7 +5,7 @@ const { Server } = require("socket.io");
 const cors = require("cors");
 
 const server = express();
-const port = 3000;
+const port = 4000;
 
 server.use(bodyParser.json());
 server.use(
@@ -25,41 +25,13 @@ const io = new Server(httpServer, {
   },
 });
 
-/*
-// Wait for connections from clients
-io.on("connection", (socket) => {
-  console.log("user : " + socket.id + " connected");
-
-  // When a client disconnects
-  socket.on("disconnect", () => {
-    console.log("user : " + socket.id + " disconnected");
-  });
-
-  // Send data to all connected clients in realtime
-  socket.on("sent-message", (message, room) => {
-    if (room === "") {
-      socket.broadcast.emit("new-message", message);
-      console.log("message : " + message);
-    } else {
-      socket.broadcast.to(room).emit("new-message", message);
-      console.log("message : " + message + " in room : " + room);
-    }
-  });
-
-  // Join a room
-  socket.on("join-room", (room) => {
-    socket.join(room);
-    console.log("user : " + socket.id + " joined room : " + room);
-  });
-});
-*/
-
 // For quiz session
 io.on("connection", (socket) => {
   console.log("user : " + socket.id + " connected");
 
-  socket.emit("verify", null);
-
+  socket.on("create_room", (user_id, room_id) => {
+    console.log("user :" + socket.id + "create room ");
+  });
   // When a client disconnects
   socket.on("disconnect", () => {
     console.log("user : " + socket.id + " disconnected");
