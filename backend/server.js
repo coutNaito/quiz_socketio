@@ -25,13 +25,36 @@ const io = new Server(httpServer, {
   },
 });
 
+//Connect to MongoDB
+
+///////////////////
+
+//Connect to firebase
+
 // For quiz session
 io.on("connection", (socket) => {
   console.log("user : " + socket.id + " connected");
 
   socket.on("create_room", (user_id, room_id) => {
+    //Function query username
     console.log("user :" + socket.id + "create room ");
+    //Read Room data from database
+
+    //////////////////////////////
+    //temp variable after read room
+    var room = 1234;
+    //join room (socket)
+    socket.join(room);
+    console.log("user : " + socket.id + " joined room : " + room);
+
+    socket.broadcast.to(room).emit("new-message", room.toString());
   });
+
+  //Player join room
+  socket.on("join_room", (user_id) => {
+    console.log("user :" + socket.id + "join room ");
+  });
+
   // When a client disconnects
   socket.on("disconnect", () => {
     console.log("user : " + socket.id + " disconnected");
@@ -46,12 +69,6 @@ io.on("connection", (socket) => {
       socket.broadcast.to(room).emit("new-message", message);
       console.log("message : " + message + " in room : " + room);
     }
-  });
-
-  // Join a room
-  socket.on("join-room", (room) => {
-    socket.join(room);
-    console.log("user : " + socket.id + " joined room : " + room);
   });
 });
 
