@@ -22,6 +22,38 @@ export default {
       transports: ["websocket", "polling"],
     });
 
+    this.socket.on("join_user", (displayname) => {
+      console.log("Username is " + displayname)
+    })
+
+    this.socket.on("currentState", (currentState) => {
+      //Change the components follow by currentState
+
+    })
+
+    this.socket.on("result", (answer, result, currentscore) => {
+      //insert answer to data prepare for display
+      //insert result to data prepare for display
+      //insert result to data prepare for display
+    })
+
+    this.socket.on("show_answer", (show) => {
+      //Display value from data
+    })
+
+    this.socket.on("question", () => {
+      
+    })
+
+    this.socket.on("show_scoreboard", (player_score) =>{
+      //Retive value from player_score
+      //
+    })
+
+    this.socket.on("show_answer", (boolean) => {
+      
+    })
+
     // Handle socket events here
     this.socket.on("disconnect", (reason) => {
       console.log("[socket disconnected]: ", reason);
